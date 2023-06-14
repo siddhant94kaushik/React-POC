@@ -1,40 +1,33 @@
 // import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
+import Navbar from './components/Navbar';
+import { Routes, Route } from 'react-router-dom';
+import Temperature from './components/Temperature';
+import SearchFilter from './components/SearchFilter';
+import Parent from './components/Parent';
+import NoPage from './components/NoPage';
+import LoginForm from './components/LoginForm';
+import HomePage from './components/HomePage';
+
 
 function App() {
 
-  const [temperatureValue, setTemperatureValue] = useState(0);
-  
-
-  const handleTemperatureChange = (event) => {
-    const value = event.target.value;
-    setTemperatureValue(value);
-  };
 
 
   return (
-    <div className="App">
-      <div className="card">
-        <div className={`temperature-display-container
-         ${temperatureValue >= 18 ? 'red' : 'blue'}`}>
+    <React.Fragment>
+      <Navbar />
+      <Routes>
+        <Route exact path='/' element={<HomePage />} />
+        <Route path='/temperature' element={<Temperature />} />
+        <Route path='/childtoparent' element={<Parent />} />
+        <Route path='/searchfilter' element={<SearchFilter />} />
+        <Route path='/form' element={<LoginForm />} />
+        <Route path='*' element={<NoPage />} />
+      </Routes>
+    </React.Fragment>
 
-          {temperatureValue}C
-
-        </div>
-        <div className="slider-container">
-          <input
-            type="range"
-            className="slider"
-            min="0"
-            max="50"
-            value={temperatureValue}
-            onChange={handleTemperatureChange}
-          />
-        </div>
-
-      </div>
-    </div >
   );
 }
 

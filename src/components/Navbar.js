@@ -5,7 +5,7 @@ function Navbar() {
     return (
         <React.Fragment>
             <nav className="navbar navbar-expand-lg navbar-light bg-primary">
-                <Link className="navbar-brand" to='/'/>Navbar
+                <Link className="navbar-brand" to='/'>Navbar</Link>
             
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">

@@ -14,7 +14,7 @@ function Child({ text, updateText }) {
     }
 
     return (
-        <div>
+        <div className='child-content'>
             <h3>Child Component</h3>
             <input type='text' placeholder='provide text' value={textEnter} onChange={handleChangeInput}></input>
             <button className='btn btn-light' onClick={handleClick}>Change Text</button>

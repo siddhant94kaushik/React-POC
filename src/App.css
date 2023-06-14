@@ -56,7 +56,7 @@
   transition: 5s;
 }
 
- .btn-outline-info {
+.btn-outline-info {
   border-radius: 100%;
   height: 70px;
   width: 70px;
@@ -69,10 +69,70 @@
   background-color: rgb(103, 103, 226);
 }
 
-.red{
+.red {
   background-color: rgb(236, 82, 82);
 }
 
-.green{
+.green {
   background-color: aqua;
+}
+
+.form-control-main {
+  margin-bottom: 12px;
+}
+
+/* login form */
+.error {
+  color: red;
+  font-size: 20px;
+}
+
+.main-container {
+  margin: 9% auto;
+  padding: 10%;
+  width: 38%;
+  background-color: aquamarine;
+  border-radius: 10%;
+}
+
+/* child-to-parent */
+.parent-container {
+  margin: 9% auto;
+  padding: 10%;
+  width: 38%;
+  background-color: aquamarine;
+  border-radius: 10%;
+}
+
+/* Search filter */
+
+.search-container {
+  margin: 9% auto;
+  padding: 10%;
+  width: 38%;
+  background-color: aquamarine;
+  border-radius: 10%;
+}
+
+/* Navbar */
+
+.collapse {
+  margin-left: 28% ;
+}
+
+.navbar-nav{
+  margin: inherit ;
+}
+
+.nav-item{
+  padding: 5px ;
+
+}
+
+.navbar {
+  margin: 20px ;
+}
+
+.navbar-brand{
+  margin-left: 28px;
 }

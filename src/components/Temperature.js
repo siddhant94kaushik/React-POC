@@ -13,6 +13,7 @@ function Temperature() {
   return (
     <div className="App">
     <div className="card">
+      <h4>Color Change with Temperature</h4>
       <div className={`temperature-display-container
        ${temperatureValue >= 18 ? 'red' : 'blue'}`}>
 

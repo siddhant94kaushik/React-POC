@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
+
 
 function LoginForm() {
 
     const loginForm = useForm();
-    const { register, control, handleSubmit, formState, reset } = loginForm
+    const { register, handleSubmit, formState, reset } = loginForm
     const { errors } = formState
 
     const [usersEntered, setUsersEntered] = useState([]);
@@ -90,7 +90,6 @@ function LoginForm() {
                         } )
                     }
                 </div>
-                <DevTool control={control} />
             </div>
         </React.Fragment>
     )

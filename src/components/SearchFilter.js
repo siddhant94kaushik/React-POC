@@ -32,8 +32,9 @@ function SearchFilter() {
 
     return (
         <div className='search-container'>
+            <h4>Search Filter:</h4>
             <div className="search-header">
-                <div className="search-text">Search:</div>
+                {/* <div className="search-text">Search:</div> */}
                 <input id="search-box" placeholder='search here' onChange={filterBySearch} />
             </div>
             <div id="item-list">
