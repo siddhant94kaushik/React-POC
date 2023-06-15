@@ -3,7 +3,7 @@ import React from 'react'
 function HomePage() {
   return (
     <React.Fragment>
-       <h1>Welcome to React POC</h1>
+       <h1>Hello! Welcome to React POC</h1>
     </React.Fragment>
       
   )
