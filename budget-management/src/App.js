@@ -63,7 +63,7 @@ const [addedExpense, setAddedExpense] = useState(getLocalStorageData())
     },
     {
         "month": "Sept",
-        "budget": 40000,
+        "budget": 60000,
         "expenseList": [...addedExpense]
     },
     {
@@ -82,7 +82,7 @@ const [addedExpense, setAddedExpense] = useState(getLocalStorageData())
         "expenseList": [...addedExpense]
     },
 ])
-console.log(list, typeof(list));
+console.log(list);
 
   const addExpenseObject = (newExpense) => {
     setAddedExpense([newExpense, ...addedExpense]);
