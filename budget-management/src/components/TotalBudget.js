@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from 'react'
 
-function TotalBudget({ addedExpense, list, setList }) {
-
-    const [monthData, setMonthData] = useState(list[0])
+function TotalBudget({list, setList, monthData, setMonthData, setMonthlyCostSum, monthlyCostSum}) {
 
 
-    const yearlyBudget = 1000000;
+    console.log(monthData);
 
-    let add = 0;
-    for (let i = 0; i < addedExpense.length; i++) {
-        add += parseInt(addedExpense[i].cost)
+    for (let i = 0; i < monthData.expenseList.length; i++) {
+        monthlyCostSum += parseInt(monthData.expenseList[i].cost)
     }
-    console.log(add);
+    console.log()
 
+    console.log(monthlyCostSum)
+    
+    // console.log(list);
+    // console.log(monthData, typeof (monthData));
 
-    useEffect(() => {
-        localStorage.setItem("totalBudget", JSON.stringify(yearlyBudget))
-    }, [])
-
-
-    useEffect(() => {
-        localStorage.setItem("monthList", JSON.stringify(list))
-    }, [])
-
-
-    console.log(list);
-    console.log(monthData, typeof (monthData));
 
     return (
         <>
@@ -39,7 +28,7 @@ function TotalBudget({ addedExpense, list, setList }) {
                         )
                     }
                 >
-                    <option value=''>Select a month</option>
+                    <option >Select a month</option>
                     {list.map((item, index) => (
                         <option key={index} value={item.month}>
                             {item.month}
@@ -70,7 +59,7 @@ function TotalBudget({ addedExpense, list, setList }) {
                                 type='text'
                                 className='form-control'
                                 placeholder='expense'
-                                value={add}
+                                value={monthlyCostSum}
                                 defaultValue={0}
                             />
                         </span>
@@ -83,7 +72,7 @@ function TotalBudget({ addedExpense, list, setList }) {
                                 type='text'
                                 className='form-control'
                                 placeholder='balance'
-                                value={monthData.budget - add}
+                                value={monthData.budget - monthlyCostSum}
                                 defaultValue={0}
                             />
                         </span>

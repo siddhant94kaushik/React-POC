@@ -1,25 +1,44 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 
-function AddExpenses({addExpenseObject}) {
+function AddExpenses({list, setList, monthData, monthlyCostSum}) {
 
     let addNewExpense;
     const [addExpenseName, setExpenseName] = useState('')
     const [addCost, setAddCost] = useState()
+
+
+    // console.log(monthData);
+    console.log(list);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
          addNewExpense = {
             name: addExpenseName,
             cost: addCost,
+            month: monthData.month,
         }
-        console.log(addNewExpense);
 
-        addExpenseObject(addNewExpense); 
+        let updatedList = [...list];
+        console.log(updatedList);
+        for(let i=0; i<list.length; i++){
+            if(addNewExpense.month === list[i].month){
+                updatedList[i].expenseList.push(addNewExpense);
+            }
+        }
+
+        // if(monthlyCostSum >= monthData.budget){
+        //     alert("Sorry! Your expenses has gone higher than monthly budget")   
+        // }
+
+        console.log(monthlyCostSum);
+        setList(updatedList)
         setExpenseName('');
         setAddCost('');
     }
     
 
+   
 
     return (
         <>
