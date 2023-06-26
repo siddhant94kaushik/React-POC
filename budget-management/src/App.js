@@ -99,8 +99,6 @@ function App() {
 
   const [monthData, setMonthData] = useState(list[0])
 
-  const [monthlyCostSum, setMonthlyCostSum] = useState(0);
-
 
   useEffect(() => {
     localStorage.setItem("monthList", JSON.stringify(list))
@@ -121,9 +119,6 @@ function App() {
                   setList={setList}
                   monthData={monthData}
                   setMonthData={setMonthData}
-                  getData1={getData1}
-                  monthlyCostSum={monthlyCostSum}
-                  setMonthlyCostSum={setMonthlyCostSum}
                 />
               </div>
             </div>
@@ -146,7 +141,6 @@ function App() {
                   list={list}
                   setList={setList}
                   monthData={monthData}
-                  monthlyCostSum={monthlyCostSum}
                 />
               </div>
             </div>
