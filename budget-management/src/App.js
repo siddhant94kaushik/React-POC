@@ -6,94 +6,104 @@ import TotalBudget from './components/TotalBudget';
 
 function App() {
 
-  let getData;
-const getLocalStorageData = () => {
-  getData = localStorage.getItem('expenseList')
-  // console.log(getData, typeof (getData))s
 
-  if (getData) {
-    return JSON.parse(localStorage.getItem('expenseList'));
-  } else {
-    return [];
-  }
-}
+  const getLocalStorageDataForExpenseList = () => {
+    let getData = localStorage.getItem('expenseList')
 
-const [addedExpense, setAddedExpense] = useState(getLocalStorageData())
-   
-  const [list, setList] = useState([
-    {
-        "month": "Jan",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Feb",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Mar",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Apr",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "May",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Jun",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Jul",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Aug",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Sept",
-        "budget": 60000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Oct",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Nov",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-    {
-        "month": "Dec",
-        "budget": 40000,
-        "expenseList": [...addedExpense]
-    },
-])
-console.log(list);
-
-  const addExpenseObject = (newExpense) => {
-    setAddedExpense([newExpense, ...addedExpense]);
-    // setAddedExpense((prev) => [newExpense, ...prev])
+    if (getData) {
+      return JSON.parse(localStorage.getItem('expenseList'));
+    } else {
+      return [];
+    }
   }
 
-  console.log(addedExpense);
+  const getLocalStorageDataForMonthList = () => {
+    let getData1 = localStorage.getItem('monthList')
+
+    if (getData1) {
+      return JSON.parse(localStorage.getItem('monthList'));
+    } else {
+      return [
+        {
+          "month": "Jan",
+          "budget": 100000,
+          "expenseList": []
+        },
+        {
+          "month": "Feb",
+          "budget": 100000,
+          "expenseList": []
+        },
+        {
+          "month": "Mar",
+          "budget": 200000,
+          "expenseList": []
+        },
+        {
+          "month": "Apr",
+          "budget": 300000,
+          "expenseList": []
+        },
+        {
+          "month": "May",
+          "budget": 400000,
+          "expenseList": []
+        },
+        {
+          "month": "Jun",
+          "budget": 500000,
+          "expenseList": []
+        },
+        {
+          "month": "Jul",
+          "budget": 600000,
+          "expenseList": []
+        },
+        {
+          "month": "Aug",
+          "budget": 700000,
+          "expenseList": []
+        },
+        {
+          "month": "Sept",
+          "budget": 800000,
+          "expenseList": []
+        },
+        {
+          "month": "Oct",
+          "budget": 900000,
+          "expenseList": []
+        },
+        {
+          "month": "Nov",
+          "budget": 700000,
+          "expenseList": []
+        },
+        {
+          "month": "Dec",
+          "budget": 600000,
+          "expenseList": []
+        },
+      ]}}
+  
+
+  const getData = getLocalStorageDataForExpenseList();
+  console.log("expenseList get from localStorage", getData);
+
+  const getData1 = getLocalStorageDataForMonthList();
+  console.log("monthList after adding expense to any month from loaclStorage",getData1)
+
+
+
+  const [list, setList] = useState(getLocalStorageDataForMonthList())
+
+  const [monthData, setMonthData] = useState(list[0])
+
 
   useEffect(() => {
-    localStorage.setItem("expenseList", JSON.stringify(addedExpense))
-  }, [addedExpense])
+    localStorage.setItem("monthList", JSON.stringify(list))
+  }, [list])
+
 
   return (
     <>
@@ -103,25 +113,35 @@ console.log(list);
             <h1 className='mt-3 text-center'>My Budget Planner</h1>
 
             <div className='row m-3'>
-              {/* <div className='col-md'>
-                <MonthList addedExpense={addedExpense} />
-              </div> */}
               <div className='col-md'>
-                <TotalBudget addedExpense={addedExpense} list={list} setList={setList} />
+                <TotalBudget
+                  list={list}
+                  setList={setList}
+                  monthData={monthData}
+                  setMonthData={setMonthData}
+                />
               </div>
             </div>
 
             <h2 className='m-3'>Expenses List</h2>
             <div className='row m-3'>
               <div className='col-md'>
-                <ExpenseList addedExpense={addedExpense} setAddedExpense={setAddedExpense} list={list} setList={setList}/>
+                <ExpenseList
+                  list={list}
+                  setList={setList}
+                  monthData={monthData}
+                />
               </div>
             </div>
 
             <h2 className='m-4'>Add Expenses</h2>
             <div className='row m-3'>
               <div className='col-md'>
-                <AddExpenses addExpenseObject={addExpenseObject} />
+                <AddExpenses
+                  list={list}
+                  setList={setList}
+                  monthData={monthData}
+                />
               </div>
             </div>
           </div>
