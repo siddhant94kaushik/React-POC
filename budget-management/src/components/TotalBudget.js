@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 function TotalBudget({ list, setList, monthData, setMonthData }) {
-
-  let monthlyCostSum = 0;
-  for (let i = 0; i < monthData.expenseList.length; i++) {
-    monthlyCostSum += parseInt(monthData.expenseList[i].cost);
-  }
+  
+    
+  const expenseSum = monthData.expenseList.reduce((sum, expense) => sum + parseInt(expense.cost), 0);
 
   return (
     <>
@@ -38,7 +36,6 @@ function TotalBudget({ list, setList, monthData, setMonthData }) {
                 className="form-control"
                 placeholder="budget"
                 value={monthData.budget}
-                defaultValue={0}
               />
             </span>
           </div>
@@ -50,8 +47,7 @@ function TotalBudget({ list, setList, monthData, setMonthData }) {
                 type="text"
                 className="form-control"
                 placeholder="expense"
-                value={monthlyCostSum}
-                defaultValue={0}
+                value={expenseSum}
               />
             </span>
           </div>
@@ -63,8 +59,7 @@ function TotalBudget({ list, setList, monthData, setMonthData }) {
                 type="text"
                 className="form-control"
                 placeholder="balance"
-                value={monthData.budget - monthlyCostSum}
-                defaultValue={0}
+                value={monthData.budget - expenseSum}
               />
             </span>
           </div>

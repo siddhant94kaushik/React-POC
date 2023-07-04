@@ -7,16 +7,6 @@ import TotalBudget from './components/TotalBudget';
 function App() {
 
 
-  const getLocalStorageDataForExpenseList = () => {
-    let getData = localStorage.getItem('expenseList')
-
-    if (getData) {
-      return JSON.parse(localStorage.getItem('expenseList'));
-    } else {
-      return [];
-    }
-  }
-
   const getLocalStorageDataForMonthList = () => {
     let getData1 = localStorage.getItem('monthList')
 
@@ -87,13 +77,7 @@ function App() {
       ]}}
   
 
-  const getData = getLocalStorageDataForExpenseList();
-  console.log("expenseList get from localStorage", getData);
-
   const getData1 = getLocalStorageDataForMonthList();
-  console.log("monthList after adding expense to any month from loaclStorage",getData1)
-
-
 
   const [list, setList] = useState(getLocalStorageDataForMonthList())
 
@@ -123,7 +107,7 @@ function App() {
               </div>
             </div>
 
-            <h2 className='m-3'>Expenses List</h2>
+            <h2 className='m-4'>Expenses List</h2>
             <div className='row m-3'>
               <div className='col-md'>
                 <ExpenseList

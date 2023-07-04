@@ -1,108 +1,135 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
+import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 
 function AddExpenses({ list, setList, monthData }) {
+  const expenseForm = useForm({
+    defaultValues: {
+      name: "",
+      cost: "",
+      description: "",
+    },
+  });
+  const { register, handleSubmit, formState, reset, control } = expenseForm;
+  const { errors, dirtyFields } = formState;
+
+
   let addNewExpense;
-  const [addExpenseName, setExpenseName] = useState("");
-  const [addCost, setAddCost] = useState();
-  const [expenseNameError, setExpenseNameError] = useState("");
-  const [costError, setCostError] = useState("");
+
+  let m = moment().utc().format(); //string
+  let m1 = moment().unix(); //number
 
 
-  const handleExpenseAddition = (e) => {
-    e.preventDefault();
+  const expenseSum = monthData.expenseList.reduce((sum, expense) => sum + parseInt(expense.cost), 0);
 
-    setExpenseNameError("");
-    setCostError("");
 
-    if (addExpenseName.trim() === "") {
-      setExpenseNameError("Please enter an expense name.");
-      return;
-    }
-    if (/[^a-zA-Z -]/.test(addExpenseName)) {
-      setExpenseNameError("Expense description should be a string")
-      return;
-    }
-
-    if (addCost.trim() === "") {
-      setCostError("Please enter an expense cost.");
-      return;
-    }
-    if (!/^\d+$/.test(addCost)) {
-      setCostError("Expense cost should be a numerical value.");
-      return;
-    }
-    
-    let expenseSum = 0;
-    for (let i = 0; i < monthData.expenseList.length; i++) {
-       expenseSum += parseInt(monthData.expenseList[i].cost);
-    }
+  const handleExpenseSubmittion = (data) => {
+    console.log(data);
 
     addNewExpense = {
-      name: addExpenseName,
-      cost: addCost,
-      month: monthData.month,
+      id: m1,
+      name: data.name,
+      cost: data.cost,
+      utcdate: m,
+      description: data.description,
     };
-    
-    let updatedList = [...list];
-    if (expenseSum + parseInt(addCost) > monthData.budget) {
+
+    if (expenseSum + parseInt(data.cost) > monthData.budget) {
       toast.error("Total expenses exceed the budget!");
       return;
-    }else{
-      for (let i = 0; i < list.length; i++) {
-        if (addNewExpense.month === list[i].month) {
-          updatedList[i].expenseList.push(addNewExpense);
-        }
+    } else {
+      const item = list.find((el) => el.month === monthData.month);
+      if (item) {
+        item.expenseList.push(addNewExpense);
       }
     }
-      
-    
-    setList(updatedList);
-    setExpenseName("");
-    setAddCost("");
+       
+    setList([...list]);
+    reset();
     toast.success("Expense added successfully!");
   };
 
-
   return (
     <>
-      <form onSubmit={handleExpenseAddition}>
+      <form onSubmit={handleSubmit(handleExpenseSubmittion)}>
         <div className="row">
           <div className="col">
-            <label htmlFor="name">Expense Name</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="name"
-              value={addExpenseName}
-              onChange={(e) => setExpenseName(e.target.value)}
-              // required
-            />
-            {expenseNameError && <p className="alert alert-danger">{expenseNameError}</p>}     
+            <div className="col-md">
+              <label htmlFor="name" className="form-label">
+                Expense Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="name"
+                id="name"
+                {...register("name", {
+                  required: "Expense name is required",
+                  pattern: {
+                    value: /^[a-zA-Z -]/,
+                    message: "Expense name should be a string",
+                  },
+                })}
+              />
+            </div>
+            <p className="text-danger">{errors.name?.message}</p>
           </div>
-     
+
           <div className="col">
-            <label htmlFor="cost">Expense Cost</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="cost"
-              value={addCost}
-              onChange={(e) => setAddCost(e.target.value)}
-              // required
-            />
-            {costError && <p className="alert alert-danger">{costError}</p>}
+            <div className="col-md">
+              <label htmlFor="cost" className="form-label">
+                Expense Cost
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="cost"
+                id="cost"
+                {...register("cost", {
+                  required: "Expense cost is required",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Cost should be a number",
+                  },
+                })}
+              />
+            </div>
+            <p className="text-danger">{errors.cost?.message}</p>
           </div>
         </div>
+        <div className="col-5 mb-3">
+          <label htmlFor="description" className="form-label">
+            Expense Description
+          </label>
+          <textarea
+            className="form-control"
+            id="description"
+            {...register("description", {
+              required: (dirtyFields.name === true || dirtyFields.cost === true)
+                  ? "Expense description is required"
+                  : false,
+            })}
+          />
+          <p className="text-danger">{errors.description?.message}</p>
+        </div>
+
         <button
           type="submit"
           className="btn btn-primary mt-3"
-          disabled={monthData.expenseList?.reduce((acc,curr) => acc+= parseInt(curr.cost), 0) >= monthData.budget}
+          disabled={expenseSum >= monthData.budget}
         >
           Add Expense
         </button>
+        {expenseSum >= monthData.budget && (
+          <p className="text-danger">
+            You have spent the entire alloted budget
+          </p>
+        )}
       </form>
+      <DevTool control={control} />
       <ToastContainer />
     </>
   );
